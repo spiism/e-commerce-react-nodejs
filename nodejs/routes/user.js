@@ -5,13 +5,14 @@ const router = express.Router();
 
 //const { userById, read, update, purchaseHistory } = require('../controllers/user');
 
-const { signup } = require('../controllers/user');
+const { signup, signin } = require('../controllers/user');
 const {userSignupValidator} = require('../validator');
 
 const {sayHi} = require('../controllers/user');
 
 //do here
 router.post('/signup', userSignupValidator, signup);
+router.post('/signin', signin);
 router.get ('/', sayHi)
 
 

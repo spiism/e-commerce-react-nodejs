@@ -6,6 +6,7 @@ const expressValidator = require('express-validator');
 require('dotenv').config();
 
 //import routes
+const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 
 
@@ -27,6 +28,11 @@ app.use(cookieParser());
 app.use(expressValidator());
 
 
+//routes middleware
+app.use('/api', authRoutes);
+app.use('/api', userRoutes);
+
+
  
 //db connection
 mongoose.connect(
@@ -39,8 +45,7 @@ mongoose.connection.on('error', err => {
   console.log(`DB connection error: ${err.message}`)
 });
 
-//routes middleware
-app.use('/api', userRoutes);
+
 
 const port = process.env.PORT || 8000;
 

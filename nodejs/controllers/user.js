@@ -21,6 +21,11 @@ exports.signup = (req, res) => {
                 err: errorHandler(err)
             })
         }
+
+        //hide user salt +password
+        user.salt =undefined;
+        user.hashed_password = undefined;
+
         res.json({
             user
         });

@@ -16,7 +16,7 @@ export const signup = (user) => {
     .catch(err => {
         console.error(err);
     })
-}
+};
 
 export const signin = (user) => {
     //console.log(name, email, password);
@@ -34,4 +34,12 @@ export const signin = (user) => {
     .catch(err => {
         console.error(err);
     })
-}
+};
+
+
+export const authenticate = (data, next) => {
+    if (typeof window !== 'undefined') {
+        localStorage.setItem('jwt', JSON.stringify(data));
+        next();
+    }
+};

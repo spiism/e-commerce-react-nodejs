@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Navigate} from 'react-router-dom';
 import Layout from '../core/Layout';
-import {signin} from '../auth';
+import {signin, authenticate} from '../auth';
 
 
 const Signin = () => {
@@ -29,12 +29,14 @@ const Signin = () => {
             if(data.error) {
                 setValues ({...values, error: data.error, loading: false})
             } else {
-                setValues ({
-                    ...values,
-                    redirectToReferrer: true
-                })
+                authenticate(data, () => {
+                    setValues({
+                        ...values,
+                        redirectToReferrer: true
+                    });
+                });
             }
-        })
+        });
     };
 
     const signUpForm = () => (

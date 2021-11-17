@@ -1,48 +1,81 @@
-import React, {Fragment} from 'react';
-import {NavLink} from 'react-router-dom';
-import {signout, isAuthenticated} from '../auth';
+import React, { Fragment } from "react";
+import { Link, withRouter } from "react-router-dom";
+import { signout, isAuthenticated } from "../auth";
 
+const isActive = (history, path) => {
+    if (history.location.pathname === path) {
+        return { color: "#ff9900" };
+    } else {
+        return { color: "#ffffff" };
+    }
+};
 
-
-
-
-
-const Menu = () => (
-    
+const Menu = ({ history }) => (
     <div>
         <ul className="nav nav-tabs bg-primary">
             <li className="nav-item">
-                <NavLink className="nav-link" to="/">Home</NavLink>
+                <Link
+                    className="nav-link"
+                    style={isActive(history, "/")}
+                    to="/"
+                >
+                    Home
+                </Link>
             </li>
+
+
+            <li className="nav-item">
+                <Link
+                    className="nav-link"
+                    style={isActive(history, "/dashboard")}
+                    to="/dashboard"
+                >
+                    Dashboard
+                </Link>
+            </li>
+
 
             {!isAuthenticated() && (
                 <Fragment>
                     <li className="nav-item">
-                        <NavLink className="nav-link" to="/signin">Signin</NavLink>
+                        <Link
+                            className="nav-link"
+                            style={isActive(history, "/signin")}
+                            to="/signin"
+                        >
+                            Signin
+                        </Link>
                     </li>
 
                     <li className="nav-item">
-                        <NavLink className="nav-link" to="/signup">Signup</NavLink>
+                        <Link
+                            className="nav-link"
+                            style={isActive(history, "/signup")}
+                            to="/signup"
+                        >
+                            Signup
+                        </Link>
                     </li>
                 </Fragment>
             )}
 
             {isAuthenticated() && (
-                    <li className="nav-item">
-                        <span   className="nav-link" 
-                                style={{cursor:'pointer', color:'black' }} 
-                                onClick={() => signout(() => {
-                                    //back to home after sign out (might not a good solution yet, cannot deal with react-router-dom for now)
-                                    window.location.href = '/';
-                                })}>
-                        Signout</span>
-                    </li>
+                <li className="nav-item">
+                    <span
+                        className="nav-link"
+                        style={{ cursor: "pointer", color: "#ffffff" }}
+                        onClick={() =>
+                            signout(() => {
+                                history.push("/");
+                            })
+                        }
+                    >
+                        Signout
+                    </span>
+                </li>
             )}
-
-
-
         </ul>
     </div>
 );
 
-export default Menu;
+export default withRouter(Menu);

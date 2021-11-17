@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactRoutes from './ReactRoutes';
+import Routes from './Routes';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <ReactRoutes />
+    <Routes />
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -26,7 +26,9 @@ dotenv.config();
 
 // middlewares
 app.use(morgan('dev'));
-app.use(bodyParser.json());
+app.use(express.json())
+
+//app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(expressValidator());
 app.use(cors());

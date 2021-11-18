@@ -89,11 +89,11 @@ const AddProduct = () => {
     const newPostForm = () => (
         <form className="mb-3" onSubmit={clickSubmit}>
             <h4>Post Photo</h4>
-            {/* <div className="form-group">
+            <div className="form-group">
                 <label className="btn btn-secondary">
                     <input onChange={handleChange('photo')} type="file" name="photo" accept="image/*" />
                 </label>
-            </div> */}
+            </div>
 
             <div className="form-group">
                 <label className="text-muted">Name</label>

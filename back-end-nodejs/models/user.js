@@ -49,6 +49,7 @@ userSchema
         return this._password;
     });
 
+//passport js (have a look)
 userSchema.methods = {
     authenticate: function(plainText) {
         return this.encryptPassword(plainText) === this.hashed_password;

@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import ShowImage from "./ShowImage";
 import moment from "moment";
+import { addItem } from "./cartHelpers";
 
 const Card = ({
   product,
   showViewProductButton = true,
   showMoreDescription = false,
 }) => {
+  const [redirect, setRedirect] = useState(false);
+
   const showViewButton = (showViewProductButton) => {
     return (
       showViewProductButton && (
@@ -20,9 +23,23 @@ const Card = ({
     );
   };
 
+  const addToCart = () => {
+    addItem(product, () => {
+      setRedirect(true);
+    });
+  };
+
+  const shouldRedirect = (redirect) => {
+    if (redirect) {
+      return <Redirect to="/cart" />;
+    }
+  };
+
   const showAddToCartButton = () => {
     return (
-      <button className="btn btn-outline-warning mt-2 mb-2">Add to card</button>
+      <button onClick={addToCart} className="btn btn-outline-warning mt-2 mb-2">
+        Add to card
+      </button>
     );
   };
 
@@ -36,9 +53,13 @@ const Card = ({
 
   const showDescription = (showMoreDescription) => {
     return showMoreDescription ? (
-      <p className="mt-2 d-flex flex-column text-justify">{product.description}</p>
+      <p className="mt-2 d-flex flex-column text-justify">
+        {product.description}
+      </p>
     ) : (
-      <p className="mt-2 d-flex flex-column">{product.description.substring(0, 100)+'...'}</p>
+      <p className="mt-2 d-flex flex-column">
+        {product.description.substring(0, 100) + "..."}
+      </p>
     );
   };
 
@@ -47,6 +68,7 @@ const Card = ({
       <div className="card">
         <div className="card-header name">{product.name}</div>
         <div className="card-body">
+          {shouldRedirect(redirect)}
           <ShowImage item={product} url="product" />
 
           {/* <p className="mt-2 d-flex flex-column">{product.description.substring(0, 100)}...</p> */}

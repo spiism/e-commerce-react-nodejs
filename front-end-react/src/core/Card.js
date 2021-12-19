@@ -41,6 +41,8 @@ const Card = ({ product, showViewProductButton = true }) => {
           <p className="black-9">
             Category: {product.category && product.category.name}
           </p>
+
+          {/* use library moment to see added date of product */}
           <p className="black-8">
             Added on {moment(product.createdAt).fromNow()}
           </p>

@@ -3,7 +3,11 @@ import { Link, Redirect } from "react-router-dom";
 import ShowImage from "./ShowImage";
 import moment from "moment";
 
-const Card = ({ product, showViewProductButton = true }) => {
+const Card = ({
+  product,
+  showViewProductButton = true,
+  showMoreDescription = false,
+}) => {
   const showViewButton = (showViewProductButton) => {
     return (
       showViewProductButton && (
@@ -30,13 +34,23 @@ const Card = ({ product, showViewProductButton = true }) => {
     );
   };
 
+  const showDescription = (showMoreDescription) => {
+    return showMoreDescription ? (
+      <p className="mt-2 d-flex flex-column text-justify">{product.description}</p>
+    ) : (
+      <p className="mt-2 d-flex flex-column">{product.description.substring(0, 100)+'...'}</p>
+    );
+  };
+
   return (
     <div className="col-12 mb-3">
       <div className="card">
         <div className="card-header name">{product.name}</div>
         <div className="card-body">
           <ShowImage item={product} url="product" />
-          <p className="lead mt-2">{product.description.substring(0, 100)}</p>
+
+          {/* <p className="mt-2 d-flex flex-column">{product.description.substring(0, 100)}...</p> */}
+          {showDescription(showMoreDescription)}
           <p className="black-10">${product.price}</p>
           <p className="black-9">
             Category: {product.category && product.category.name}

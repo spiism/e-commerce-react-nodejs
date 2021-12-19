@@ -97,3 +97,9 @@
 .black-5 {
   background: #b3b3b3;
 }
+
+
+img.center {
+  display: block;
+  margin: 0 auto;
+}

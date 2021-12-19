@@ -34,12 +34,12 @@ const Product = props => {
     return (
         <Layout
             title={product && product.name}
-            description={product && product.description && product.description.substring(0, 100)}
+            description={product && product.description && product.description.substring(0, 165)}
             className="container-fluid"
         >
             <div className="row">
                 <div className="col-8">
-                    {product && product.description && <Card product={product} showViewProductButton={false} />}
+                    {product && product.description && <Card product={product} showViewProductButton={false} showMoreDescription={true} />}
                 </div>
 
                 <div className="col-4">

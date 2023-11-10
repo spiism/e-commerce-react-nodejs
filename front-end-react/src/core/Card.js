@@ -69,7 +69,9 @@ const Card = ({
         <div className="card-header name">{product.name}</div>
         <div className="card-body">
           {shouldRedirect(redirect)}
-          <ShowImage item={product} url="product" />
+          <div className="d-none d-sm-block"> {/* This div will be displayed on screens smaller than sm (i.e., mobile) */}
+        <ShowImage item={product} url="product" className="img-fluid" />
+      </div>
 
           {/* <p className="mt-2 d-flex flex-column">{product.description.substring(0, 100)}...</p> */}
           {showDescription(showMoreDescription)}

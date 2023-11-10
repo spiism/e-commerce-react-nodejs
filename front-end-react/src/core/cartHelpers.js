@@ -45,7 +45,7 @@ export const getCart = () => {
     return [];
 };
 
-export const updateItem = (productId, count) => {
+export const updateItem = (productId) => {
     let cart = [];
     if (typeof window !== 'undefined') {
         if (localStorage.getItem('cart')) {
@@ -54,7 +54,7 @@ export const updateItem = (productId, count) => {
 
         cart.map((product, i) => {
             if (product._id === productId) {
-                cart[i].count = count;
+                cart.splice(i, 1);
             }
         });
 

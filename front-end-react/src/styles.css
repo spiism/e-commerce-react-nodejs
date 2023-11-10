@@ -116,3 +116,25 @@ img.center {
   margin: 0 auto;
 }
 
+
+
+/* Hide the scrollbar track */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Define the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Define the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* On hover, style the thumb */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

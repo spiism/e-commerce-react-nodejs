@@ -8,6 +8,7 @@ const Card = ({
   product,
   showViewProductButton = true,
   showMoreDescription = false,
+  showAddToCartButton = true,
 }) => {
   const [redirect, setRedirect] = useState(false);
 
@@ -35,8 +36,8 @@ const Card = ({
     }
   };
 
-  const showAddToCartButton = () => {
-    return (
+  const showAddToCart = (showAddToCartButton) => {
+    return showAddToCartButton && (
       <button onClick={addToCart} className="btn btn-outline-warning mt-2 mb-2">
         Add to card
       </button>
@@ -89,7 +90,7 @@ const Card = ({
           <br />
 
           {showViewButton(showViewProductButton)}
-          {showAddToCartButton()}
+          {showAddToCart(showAddToCartButton)}
         </div>
       </div>
     </div>

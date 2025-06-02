@@ -116,9 +116,11 @@ const Home = () => {
 
         {loading ? (
             <div className="text-center mt-5 mb-5">
-              <div className="custom-spinner mb-4" />
-              <h4>This app currently uses free-tier API hosting</h4>
-              <p>Please wait ~1 minute for the content to load.</p>
+              <div className="custom-spinner mb-4"/>
+              <h4>Loading content, please hold on...</h4>
+              <p>This app is currently using free-tier API hosting, so loading may take up to a minute. Thanks for your
+                patience!</p>
+
             </div>
         ) : (
             <>

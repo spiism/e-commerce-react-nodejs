@@ -79,7 +79,7 @@ const Home = () => {
   const [productsBySell, setProductsBySell] = useState([]);
   const [productsByArrival, setProductsByArrival] = useState([]);
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [loading, setLoading] = useState(true);
 
   const loadProductsBySell = () => {
     return getProducts("sold").then((data) => {
@@ -102,7 +102,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // Load both APIs and wait for both to finish
     Promise.all([loadProductsByArrival(), loadProductsBySell()])
         .finally(() => setLoading(false));
   }, []);
@@ -117,7 +116,7 @@ const Home = () => {
 
         {loading ? (
             <div className="text-center mt-5 mb-5">
-              <div className="spinner-border text-primary mb-3" role="status" />
+              <div className="custom-spinner mb-4" />
               <h4>This app currently uses free-tier API hosting</h4>
               <p>Please wait ~1 minute for the content to load.</p>
             </div>
@@ -142,9 +141,33 @@ const Home = () => {
               </div>
             </>
         )}
+
+        {/* Spinner Styles */}
+        <style jsx="true">{`
+        .custom-spinner {
+          width: 50px;
+          height: 50px;
+          margin: 0 auto;
+          border: 6px solid #ccc;
+          border-top: 6px solid #007bff;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
       </Layout>
   );
 };
 
 export default Home;
+
 

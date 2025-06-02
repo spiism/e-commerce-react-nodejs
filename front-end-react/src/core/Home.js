@@ -1,3 +1,74 @@
+// import React, { useState, useEffect } from "react";
+// import Layout from "./Layout";
+// import { getProducts } from "./apiCore";
+// import Card from "./Card";
+// import Search from "./Search";
+//
+// const Home = () => {
+//   const [productsBySell, setProductsBySell] = useState([]);
+//   const [productsByArrival, setProductsByArrival] = useState([]);
+//   const [error, setError] = useState(false);
+//
+//   const loadProductsBySell = () => {
+//     getProducts("sold").then((data) => {
+//       if (data.error) {
+//         setError(data.error);
+//       } else {
+//         setProductsBySell(data);
+//       }
+//     });
+//   };
+//
+//   const loadProductsByArrival = () => {
+//     getProducts("createdAt").then((data) => {
+//       console.log(data);
+//       if (data.error) {
+//         setError(data.error);
+//       } else {
+//         setProductsByArrival(data);
+//       }
+//     });
+//   };
+//
+//   useEffect(() => {
+//     loadProductsByArrival();
+//     loadProductsBySell();
+//   }, []);
+//
+//   return (
+//     <Layout
+//       title="E book store"
+//       description="E book store"
+//       className="container-fluid"
+//     >
+//       <Search />
+//       <h2 className="mb-4">New Arrivals</h2>
+//       <div className="row">
+//         {productsByArrival.map((product, i) => (
+//           <div key={i} className="col-md-4 col-12 mb-3">
+//             <Card product={product} />
+//           </div>
+//         ))}
+//       </div>
+//
+//       <h2 className="mb-4">Best Sellers</h2>
+//       <div className="row">
+//         {productsBySell.map((product, i) => (
+//           <div key={i} className="col-4 mb-3">
+//             <Card product={product} />
+//           </div>
+//         ))}
+//       </div>
+//     </Layout>
+//   );
+// };
+//
+// export default Home;
+
+
+
+
+
 import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import { getProducts } from "./apiCore";
@@ -8,9 +79,10 @@ const Home = () => {
   const [productsBySell, setProductsBySell] = useState([]);
   const [productsByArrival, setProductsByArrival] = useState([]);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true); // Added loading state
 
   const loadProductsBySell = () => {
-    getProducts("sold").then((data) => {
+    return getProducts("sold").then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
@@ -20,8 +92,7 @@ const Home = () => {
   };
 
   const loadProductsByArrival = () => {
-    getProducts("createdAt").then((data) => {
-      console.log(data);
+    return getProducts("createdAt").then((data) => {
       if (data.error) {
         setError(data.error);
       } else {
@@ -31,36 +102,49 @@ const Home = () => {
   };
 
   useEffect(() => {
-    loadProductsByArrival();
-    loadProductsBySell();
+    // Load both APIs and wait for both to finish
+    Promise.all([loadProductsByArrival(), loadProductsBySell()])
+        .finally(() => setLoading(false));
   }, []);
 
   return (
-    <Layout
-      title="E book store"
-      description="E book store"
-      className="container-fluid"
-    >
-      <Search />
-      <h2 className="mb-4">New Arrivals</h2>
-      <div className="row">
-        {productsByArrival.map((product, i) => (
-          <div key={i} className="col-md-4 col-12 mb-3">
-            <Card product={product} />
-          </div>
-        ))}
-      </div>
+      <Layout
+          title="E book store"
+          description="E book store"
+          className="container-fluid"
+      >
+        <Search />
 
-      <h2 className="mb-4">Best Sellers</h2>
-      <div className="row">
-        {productsBySell.map((product, i) => (
-          <div key={i} className="col-4 mb-3">
-            <Card product={product} />
-          </div>
-        ))}
-      </div>
-    </Layout>
+        {loading ? (
+            <div className="text-center mt-5 mb-5">
+              <div className="spinner-border text-primary mb-3" role="status" />
+              <h4>This app currently uses free-tier API hosting</h4>
+              <p>Please wait ~1 minute for the content to load.</p>
+            </div>
+        ) : (
+            <>
+              <h2 className="mb-4">New Arrivals</h2>
+              <div className="row">
+                {productsByArrival.map((product, i) => (
+                    <div key={i} className="col-md-4 col-12 mb-3">
+                      <Card product={product} />
+                    </div>
+                ))}
+              </div>
+
+              <h2 className="mb-4">Best Sellers</h2>
+              <div className="row">
+                {productsBySell.map((product, i) => (
+                    <div key={i} className="col-md-4 col-12 mb-3">
+                      <Card product={product} />
+                    </div>
+                ))}
+              </div>
+            </>
+        )}
+      </Layout>
   );
 };
 
 export default Home;
+
